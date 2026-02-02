@@ -1,0 +1,1 @@
+from app.database.models.prediction_model import Prediction, Features

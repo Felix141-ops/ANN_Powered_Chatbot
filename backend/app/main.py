@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api import predict, chat
+from app.database.db import engine
+from app.database.base import Base
+from app.models import prediction_model
 
 app = FastAPI(
     title="Diabetes ANN Chatbot API",
@@ -18,6 +21,8 @@ app.add_middleware(
 
 app.include_router(predict.router, prefix="/api/predict", tags=["Prediction"])
 app.include_router(chat.router, prefix="/api/chat", tags=["Chatbot"])
+
+Base.metadata.create_all(bind=engine)
 
 @app.get("/")
 def health_check():
