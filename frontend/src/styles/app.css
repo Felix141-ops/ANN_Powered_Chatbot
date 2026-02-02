@@ -123,6 +123,17 @@ body {
 }
 
 /* FORM */
+.form-description {
+  color: #94a3b8;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.clinical-form {
+  display: grid;
+  gap: 1rem;
+}
+
 .form-row {
   display: flex;
   gap: 20px;
@@ -130,12 +141,38 @@ body {
 }
 
 .form-group {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  color: #cbd5f5;
+  margin-bottom: 0.3rem;
 }
 
 label {
   font-size: 13px;
   color: #9aa7b2;
+}
+
+.unit {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-left: 0.25rem;
+}
+
+.form-group input {
+  padding: 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #1e293b;
+  background: #020617;
+  color: #e5e7eb;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #00c2ff;
 }
 
 input {
@@ -157,6 +194,12 @@ input {
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
+}
+
+.submit-btn:disabled {
+  background: #1e293b;
+  cursor: not-allowed;
+  color:#275a69
 }
 
 /* PROCESSING */

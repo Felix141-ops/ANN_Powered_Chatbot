@@ -1,13 +1,9 @@
-import ChatWindow from "../components/Sidebar";
-import "../styles/chatbot.css";
+import ClinicalForm from "../components/ClinicalForm";
 
-const Chatbot = () => {
+export default function Chatbot() {
   return (
-    <div className="chatbot-container">
-      <h2>Diabetes Prediction Chatbot</h2>
-      <ChatWindow />
+    <div className="chatbot-page">
+      <ClinicalForm />
     </div>
   );
-};
-
-export default Chatbot;
+}

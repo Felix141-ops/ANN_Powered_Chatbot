@@ -1,61 +1,65 @@
+import { useEffect, useState } from "react";
+import { fetchClinicalForm } from "../services/api";
+
 export default function ClinicalForm() {
+  const [form, setForm] = useState(null);
+  const [values, setValues] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchClinicalForm()
+      .then(data => {
+        setForm(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
+
+  function handleChange(id, value) {
+    setValues(prev => ({ ...prev, [id]: value }));
+  }
+
+  if (loading) return <p>Loading clinical form…</p>;
+  if (!form) return <p>Unable to load form.</p>;
+
   return (
     <div className="card">
       <div className="card-header">
-        <h4>Clinical Data Entry</h4>
+        <h4>{form.title}</h4>
         <span className="tag">ANN Input Layer</span>
       </div>
 
+      <p className="form-description">{form.description}</p>
+
       <form className="clinical-form">
-        <div className="form-row">
-          <div className="form-group">
-            <label>Glucose Level (mg/dL)</label>
-            <input type="number" placeholder="e.g: " />
-          </div>
+        {form.fields.map(field => (
+          <div className="form-group" key={field.id}>
+            <label>
+              {field.label}
+              <span className="unit">({field.unit})</span>
+            </label>
 
-          <div className="form-group">
-            <label>BMI (kg/m²)</label>
-            <input type="number" step="0.1" placeholder="e.g: "/>
+            <input
+              type={field.type}
+              min={field.min}
+              max={field.max}
+              value={values[field.id] || ""}
+              onChange={e => handleChange(field.id, e.target.value)}
+              required
+            />
           </div>
-        </div>
+        ))}
 
-        <div className="form-row">
-          <div className="form-group">
-            <label>Age (years)</label>
-            <input type="number" placeholder="e.g: 25"/>
-          </div>
-
-          <div className="form-group">
-            <label>Insulin (μU/mL)</label>
-            <input type="number" placeholder="e.g: "/>
-          </div>
-        </div>
-
-        <div className="form-row">
-          <div className="form-group">
-            <label>Pregnancies (Count)</label>
-            <input type="number" placeholder="e.g: 2"/>
-          </div>
-
-          <div className="form-group">
-            <label>Blood Pressure (Diastolic only in mmHg)</label>
-            <input type="number" placeholder="e.g: "/>
-          </div>
-        </div>
-
-        <div className="form-row">
-          <div className="form-group">
-            <label>SkinFold Thickness (mm)</label>
-            <input type="number" placeholder="e.g: 35"/>
-          </div>
-
-          <div className="form-group">
-            <label>Diabetes Pedigree Function</label>
-            <input type="number" step="0.001" placeholder="e.g: "/>
-          </div>
-        </div>
-
-        <button className="submit-btn">Submit for Analysis</button>
+        <button
+          type="button"
+          className="submit-btn"
+          disabled={Object.keys(values).length !== form.fields.length}
+        >
+          Submit for Analysis
+        </button>
       </form>
     </div>
   );
