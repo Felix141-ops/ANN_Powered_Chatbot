@@ -376,3 +376,135 @@ input {
 
 
 }
+
+/* PREDICTION RESULTS */
+.prediction-result {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.prediction-content {
+  text-align: center;
+  padding: 2rem;
+}
+
+.prediction-badge {
+  display: inline-block;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.prediction-badge.diabetic {
+  background: linear-gradient(135deg, #ff4757, #ff3838);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+}
+
+.prediction-badge.non-diabetic {
+  background: linear-gradient(135deg, #2ed573, #1e90ff);
+  color: white;
+  box-shadow: 0 4px 15px rgba(46, 213, 115, 0.3);
+}
+
+.probability-display {
+  margin: 2rem 0;
+}
+
+.probability-bar {
+  width: 100%;
+  height: 20px;
+  background: #2a3441;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.probability-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3cc3d9, #1e90ff);
+  transition: width 0.5s ease;
+}
+
+.probability-text {
+  font-size: 1.1rem;
+  color: #3cc3d9;
+  font-weight: bold;
+}
+
+.prediction-message {
+  background: #1a2332;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+  text-align: left;
+  line-height: 1.6;
+}
+
+.prediction-message p {
+  margin: 0.5rem 0;
+}
+
+.reset-btn {
+  background: #3cc3d9;
+  color: #002b36;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.reset-btn:hover {
+  background: #2bb5c9;
+}
+
+/* ERROR MESSAGES */
+.error-message {
+  background: #ff4757;
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* FIELD HELP TEXT */
+.field-help {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  color: #9aa7b2;
+  font-style: italic;
+}
+
+/* CLINICAL FORM CONTAINER */
+.clinical-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* PROCESSING OVERLAY */
+.processing-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(11, 18, 32, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  z-index: 10;
+}
+
+.card {
+  position: relative; /* For overlay positioning */
+}

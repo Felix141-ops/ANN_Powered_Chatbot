@@ -31,6 +31,3 @@ class Prediction(Base):
 
     feature_id = Column(Integer, ForeignKey("features.id"), nullable=False)
     features = relationship("Features", back_populates="prediction") #used to define an explicit bidirectional relationship between two models.
-
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
-    user = relationship("User", back_populates="predictions")
