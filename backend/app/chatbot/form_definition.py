@@ -5,7 +5,6 @@ FORM_FIELDS = [
         "type": "number",
         "min": 0,
         "max": 20,
-        "step": 1,
         "unit": "count"
     },
     {
@@ -14,7 +13,6 @@ FORM_FIELDS = [
         "type": "number",
         "min": 0,
         "max": 300,
-        "step": 0.1,
         "unit": "mg/dL"
     },
     {
@@ -23,7 +21,6 @@ FORM_FIELDS = [
         "type": "number",
         "min": 0,
         "max": 200,
-        "step": 0.1,
         "unit": "mm Hg"
     },
     {
@@ -32,7 +29,6 @@ FORM_FIELDS = [
         "type": "number",
         "min": 0,
         "max": 100,
-        "step": 0.1,
         "unit": "mm"
     },
     {
@@ -41,7 +37,6 @@ FORM_FIELDS = [
         "type": "number",
         "min": 0,
         "max": 900,
-        "step": 0.1,
         "unit": "μU/mL"
     },
     {
@@ -50,7 +45,6 @@ FORM_FIELDS = [
         "type": "number",
         "min": 0,
         "max": 80,
-        "step": 0.1,
         "unit": "kg/m²"
     },
     {
@@ -59,7 +53,6 @@ FORM_FIELDS = [
         "type": "number",
         "min": 0,
         "max": 3,
-        "step": 0.001,
         "unit": "score"
     },
     {
@@ -68,7 +61,6 @@ FORM_FIELDS = [
         "type": "number",
         "min": 1,
         "max": 120,
-        "step": 1,
         "unit": "years"
     }
 ]

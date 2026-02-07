@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api import predict, chat
 from app.database.db import engine
 from app.database.base import Base
-from app.database.models import prediction_model
+from app.models import prediction_model
 
 app = FastAPI(
     title="Diabetes ANN Chatbot API",
