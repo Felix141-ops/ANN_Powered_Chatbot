@@ -9,7 +9,7 @@ from app.database.models.model_loader import ModelLoader
 class PredictionService:
     
     @staticmethod
-    def predict_from_dict(data: PatientInput, db: Session, user_id: int | None = None) -> PredictionResponse:
+    def predict_from_dict(data: PatientInput, db: Session) -> PredictionResponse:
         """
         Save patient features to the database, perform prediction using the trained model,
         save the prediction result, and return the prediction response.
@@ -55,8 +55,7 @@ class PredictionService:
         prediction = Prediction(
             result=prediction_result,
             probability=probability,
-            feature_id=features.id,
-            user_id=user_id
+            feature_id=features.id
         )
         
         db.add(prediction)
