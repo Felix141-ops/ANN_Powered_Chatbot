@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api import predict, chat
+from app.api import predict, chat, auth, history
 from app.database.db import engine
 from app.database.base import Base
 from app.database.models import prediction_model
@@ -21,6 +21,8 @@ app.add_middleware(
 
 app.include_router(predict.router, prefix="/api/predict", tags=["Prediction"])
 app.include_router(chat.router, prefix="/api/chat", tags=["Chatbot"])
+app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
+app.include_router(history.router, prefix="/api/history", tags=["History"])
 
 Base.metadata.create_all(bind=engine)
 
