@@ -1,30 +1,15 @@
-import { useState } from "react";
-import Sidebar from "./components/Sidebar";
-import TopBar from "./components/TopBar";
-import AssistantMessage from "./components/AssistantMessage";
-import ClinicalForm from "./components/ClinicalForm";
-import Processing from "./components/Processing";
-import ChatInput from "./components/ChatInput";
+import { Routes, Route, Navigate } from "react-router-dom";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import Chatbot from "./pages/Chatbot";
 
 export default function App() {
-   const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
-    <div className={`app-container ${sidebarOpen ? "sidebar-open" : ""}`}>
-      <Sidebar onClose={() => setSidebarOpen(false)} />
-
-      <main className="main">
-        <TopBar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-        <AssistantMessage />
-        <ClinicalForm />
-        <Processing />
-        <ChatInput />
-
-        <footer className="footer">
-          <span>Validated Model: ANN-PIMA-v2</span>
-          <span>Confidence Interval: 98.4%</span>
-        </footer>
-      </main>
-    </div>
+    <Routes>
+      <Route path="/signin" element={<SignIn />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/chatbot" element={<Chatbot />} />
+      <Route path="/" element={<Navigate to="/signin" replace />} />
+    </Routes>
   );
 }

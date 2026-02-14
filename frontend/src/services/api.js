@@ -8,11 +8,19 @@ export async function fetchClinicalForm() {
 
 export async function submitPrediction(formData) {
   try {
+    const token = localStorage.getItem("token");
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+    
+    // Include token if available
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
     const res = await fetch(`${API_BASE}/chat/predict`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify(formData),
     });
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchClinicalForm, submitPrediction } from "../services/api";
 import Processing from "./Processing";
 
-export default function ClinicalForm() {
+export default function ClinicalForm({ onPredictionSuccess }) {
   const [form, setForm] = useState(null);
   const [values, setValues] = useState({});
   const [loading, setLoading] = useState(true);
@@ -142,6 +142,11 @@ export default function ClinicalForm() {
         probability: predictionData.probability,
         message: message
       });
+
+      // Call the callback to refresh sidebar history
+      if (onPredictionSuccess) {
+        onPredictionSuccess();
+      }
     } catch (err) {
       setError(err.message);
     } finally {
