@@ -1,5 +1,4 @@
 import joblib
-from tensorflow.keras.models import load_model
 from app.config import MODEL_PATH, SCALER_PATH
 
 class ModelLoader:
@@ -9,6 +8,7 @@ class ModelLoader:
     @classmethod
     def load(cls):
         if cls.model is None:
+            from tensorflow.keras.models import load_model
             cls.model = load_model(MODEL_PATH)
         if cls.scaler is None:
             cls.scaler = joblib.load(SCALER_PATH)

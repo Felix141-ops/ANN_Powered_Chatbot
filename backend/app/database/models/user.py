@@ -14,3 +14,4 @@ class User(Base):
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
 
     predictions = relationship("Prediction", back_populates="user")
+    token_blacklists = relationship("TokenBlacklist", back_populates="user")

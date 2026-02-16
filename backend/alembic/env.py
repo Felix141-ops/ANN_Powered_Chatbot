@@ -7,7 +7,10 @@ from alembic import context
 
 from app.config import DATABASE_URL
 from app.database.base import Base
-from app.database.models import Prediction, Features  # Import models to register them with Base
+# Import all models to register them with Base.metadata
+from app.database.models.user import User
+from app.database.models.prediction_model import Prediction, Features
+from app.database.models.token_blacklist import TokenBlacklist
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
