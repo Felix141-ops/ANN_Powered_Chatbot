@@ -20,20 +20,67 @@ export default function Chatbot() {
   const renderMessage = (m, idx) => {
     // 🔹 Prediction Message Rendering
     if (m.type === "prediction") {
+      const badgeClass = m.isDiabetic ? "diabetic" : "non-diabetic";
+      const predictionText = m.isDiabetic ? "Diabetic" : "Non-Diabetic";
+      
       return (
-        <div key={idx} className="chat-bubble prediction">
-          <div className="prediction-card">
-            {typeof m.text === "object" ? (
-              <>
-                <h3>{m.text.prediction}</h3>
-                <p>
-                  Confidence: {(m.text.probability * 100).toFixed(1)}%
-                </p>
-                {m.text.message && <p>{m.text.message}</p>}
-              </>
-            ) : (
-              <div>{m.text}</div>
-            )}
+        <div key={idx} className="chat-bubble bot" style={{ alignSelf: "stretch", maxWidth: "100%" }}>
+          <div className="prediction-message-container">
+            <div className="prediction-header">
+              <div className={`prediction-status-badge ${badgeClass}`}>
+                {predictionText}
+              </div>
+              <div className="prediction-confidence">
+                Confidence: {m.probability}%
+              </div>
+            </div>
+            
+            <div className="prediction-body">
+              {m.message.split('\n\n').map((paragraph, pIdx) => {
+                // Handle warning sections
+                if (paragraph.includes('⚠️')) {
+                  return (
+                    <div key={pIdx} className="warning-section">
+                      {paragraph.split('\n').map((line, lIdx) => (
+                        <div key={lIdx}>{line}</div>
+                      ))}
+                    </div>
+                  );
+                }
+                
+                // Handle success sections for non-diabetic
+                if (m.isDiabetic === false && paragraph.includes('Great news')) {
+                  return (
+                    <div key={pIdx} className="success-section">
+                      {paragraph.split('\n').map((line, lIdx) => (
+                        <div key={lIdx}>{line}</div>
+                      ))}
+                    </div>
+                  );
+                }
+                
+                // Handle recommendation lists
+                if (paragraph.includes('•')) {
+                  const recommendations = paragraph.split('\n').filter(line => line.includes('•'));
+                  return (
+                    <div key={pIdx}>
+                      <p>{paragraph.split('\n').find(line => !line.includes('•'))}</p>
+                      <ul className="recommendations-list">
+                        {recommendations.map((rec, rIdx) => (
+                          <li key={rIdx}>{rec.replace('•', '').trim()}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                }
+                
+                return <p key={pIdx}>{paragraph}</p>;
+              })}
+            </div>
+            
+            <div className="prediction-footer">
+              Analysis complete • Based on clinical parameters
+            </div>
           </div>
         </div>
       );

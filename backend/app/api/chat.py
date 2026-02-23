@@ -13,7 +13,7 @@ router = APIRouter()
 @router.post("/predict")
 def make_prediction(patient: PatientInput, db: Session = Depends(get_db), authorization: str | None = Header(None)):
     """
-    Accept form data directly and make a prediction.
+    Accept user data directly and make a prediction.
     This endpoint receives patient data and returns prediction with message.
     """
     user_id = None

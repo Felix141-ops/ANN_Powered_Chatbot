@@ -31,3 +31,5 @@ node_modules/
 *.h5
 *.pb
 *.tflite
+#scaler files
+.pkl

@@ -168,6 +168,123 @@ body {
   padding: 18px;
 }
 
+/* PREDICTION MESSAGE STYLING */
+.prediction-message-container {
+  max-width: 100%;
+  background: #0e1621;
+  border-radius: 12px;
+  padding: 0;
+  margin: 8px 0;
+  overflow: hidden;
+  border: 1px solid #1f3c52;
+}
+
+.prediction-header {
+  padding: 16px;
+  border-bottom: 2px solid #1f3c52;
+}
+
+.prediction-status-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.prediction-status-badge.diabetic {
+  background: linear-gradient(135deg, #ff6b6b, #ff4757);
+  color: white;
+  box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+}
+
+.prediction-status-badge.non-diabetic {
+  background: linear-gradient(135deg, #00d4aa, #00ff88);
+  color: #001f00;
+  box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3);
+}
+
+.prediction-confidence {
+  font-size: 14px;
+  color: #a8b8c8;
+  margin-top: 8px;
+}
+
+.prediction-body {
+  padding: 16px;
+  text-align: left;
+  color: #c8d3e0;
+  line-height: 1.7;
+}
+
+.prediction-body p {
+  margin: 8px 0;
+}
+
+.warning-section {
+  background: rgba(255, 107, 107, 0.1);
+  border-left: 4px solid #ff6b6b;
+  padding: 12px;
+  margin: 12px 0;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.warning-section strong {
+  color: #ff8787;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.success-section {
+  background: rgba(0, 255, 136, 0.1);
+  border-left: 4px solid #00ff88;
+  padding: 12px;
+  margin: 12px 0;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.success-section strong {
+  color: #00d4aa;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.recommendations-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+}
+
+.recommendations-list li {
+  padding: 6px 0;
+  padding-left: 24px;
+  position: relative;
+  font-size: 14px;
+  color: #b8c8d8;
+}
+
+.recommendations-list li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #00ff88;
+  font-weight: bold;
+}
+
+.prediction-footer {
+  background: rgba(60, 195, 217, 0.05);
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #7a8d9f;
+  text-align: center;
+  border-top: 1px solid #1f3c52;
+}
+
 /* PREDICTION CARD */
 .prediction-card {
   margin-top: 15px;
@@ -277,26 +394,6 @@ input {
   color:#275a69
 }
 
-/* PROCESSING */
-.processing {
-  text-align: center;
-  margin: 30px 0;
-  color: #3cc3d9;
-}
-
-.loader {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  border: 2px solid #3cc3d9;
-  border-top: 2px solid transparent;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
 
 /* CHAT INPUT */
 .chat-input {
