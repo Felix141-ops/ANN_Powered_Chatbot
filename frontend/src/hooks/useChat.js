@@ -1,41 +1,89 @@
 import { useState } from "react";
+import { submitPrediction } from "../services/api";
 
 const questions = [
   { key: "pregnancies", text: "How many times have you been pregnant?" },
   { key: "glucose", text: "What is your glucose level?" },
-  { key: "blood_pressure", text: "What is your blood pressure?" },
+  { key: "blood_pressure", text: "What is your diastolic blood pressure?" },
   { key: "skin_thickness", text: "What is your skin thickness value?" },
   { key: "insulin", text: "What is your insulin level?" },
-  { key: "bmi", text: "What is your BMI?" },
-  { key: "dpf", text: "What is your diabetes pedigree function (DPF)?" },
+  { key: "bmi", text: "What is your Body Mass Index (BMI)?" },
+  { key: "diabetes_pedigree", text: "What is your diabetes pedigree function (DPF)?" },
   { key: "age", text: "What is your age?" }
 ];
 
 export const useChat = () => {
   const [messages, setMessages] = useState([
+    { sender: "bot", text: "Hello. I am your Diabetes Prediction Assistant." },
     { sender: "bot", text: questions[0].text }
   ]);
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  const handleUserInput = (input) => {
-    const key = questions[currentStep].key;
+  const appendMessage = (msg) => setMessages((prev) => [...prev, msg]);
 
-    setMessages((prev) => [
-      ...prev,
-      { sender: "user", text: input }
-    ]);
+  // Validate numeric inputs: must be a number (empty not allowed)
+  const validateInput = (input) => {
+    if (input === null || input === undefined) return { ok: false, error: "Please enter a value" };
+    const trimmed = String(input).trim();
+    if (trimmed === "") return { ok: false, error: "Please enter a value" };
+    const num = Number(trimmed);
+    if (isNaN(num)) return { ok: false, error: "Please enter a valid number" };
+    return { ok: true, value: num };
+  };
 
-    setAnswers((prev) => ({ ...prev, [key]: input }));
+  const handleUserInput = async (input) => {
+    const q = questions[currentStep];
 
+    // Add user message
+    appendMessage({ sender: "user", text: input });
+
+    // Validate
+    const validation = validateInput(input);
+    if (!validation.ok) {
+      appendMessage({ sender: "bot", text: `Invalid input: ${validation.error}. ${q.text}` });
+      return { accepted: false, error: validation.error };
+    }
+
+    // Save numeric value
+    setAnswers((prev) => ({ ...prev, [q.key]: validation.value }));
+
+    // Advance or submit
     if (currentStep < questions.length - 1) {
-      setCurrentStep(currentStep + 1);
-      setMessages((prev) => [
-        ...prev,
-        { sender: "bot", text: questions[currentStep + 1].text }
-      ]);
+      const nextStep = currentStep + 1;
+      setCurrentStep(nextStep);
+      appendMessage({ sender: "bot", text: questions[nextStep].text });
+      return { accepted: true };
+    }
+
+    // Last question answered: submit prediction
+    setLoading(true);
+    appendMessage({ sender: "bot", text: "Thanks — running analysis now..." });
+
+    try {
+      // Build payload using answers + this last answer
+      const payload = { ...(answers), [q.key]: validation.value };
+      const result = await submitPrediction(payload);
+
+      // Attempt to display a friendly summary
+      if (result && result.prediction) {
+        const prob = (result.probability || 0) * 100;
+        appendMessage({ sender: "bot", text: `Prediction: ${result.prediction} (${prob.toFixed(1)}% confidence)` });
+      } else if (result && typeof result === "string") {
+        appendMessage({ sender: "bot", text: result });
+      } else {
+        appendMessage({ sender: "bot", text: "Received response from server." });
+      }
+
+      return { accepted: true };
+    } catch (err) {
+      appendMessage({ sender: "bot", text: `Analysis failed: ${err.message || err}` });
+      return { accepted: false, error: err.message || String(err) };
+    } finally {
+      setLoading(false);
     }
   };
 
-  return { messages, handleUserInput, answers, currentStep };
+  return { messages, handleUserInput, answers, currentStep, loading };
 };
