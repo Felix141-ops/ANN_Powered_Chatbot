@@ -3,7 +3,7 @@
 venv/
 env/
 
-# Python cache
+# Python cache files
 __pycache__/
 *.pyc
 *.pyo
@@ -31,3 +31,5 @@ node_modules/
 *.h5
 *.pb
 *.tflite
+#scaler files
+.pkl
